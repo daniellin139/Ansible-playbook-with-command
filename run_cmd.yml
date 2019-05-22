@@ -1,5 +1,5 @@
 ---
-  - name: Run Command
+  - name: Run Show Command
     hosts: all
     connection: local
     gather_facts: no
@@ -11,12 +11,14 @@
       - Device_PASS: lab123
 
     tasks:
-      - name: Run Commands
+      - name: Run Show Commands
         juniper_junos_command:
           user: "{{ Device_USER }}"
           passwd: "{{ Device_PASS }}"
           host: "{{ inventory_hostname }}"
           port: 22
-          commands: "{{ SHOW_COMMAND }}"
+          commands: 
+            - show version
+            - show interfaces
           formats: text
           dest: "{{playbook_dir}}/{{ inventory_hostname }}.output.txt"
