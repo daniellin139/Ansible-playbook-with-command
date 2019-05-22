@@ -1,0 +1,22 @@
+---
+  - name: Run Command
+    hosts: all
+    connection: local
+    gather_facts: no
+    roles:
+      - Juniper.junos
+
+    vars:
+      - Device_USER: labroot
+      - Device_PASS: lab123
+
+    tasks:
+      - name: Run Commands
+        juniper_junos_command:
+          user: "{{ Device_USER }}"
+          passwd: "{{ Device_PASS }}"
+          host: "{{ inventory_hostname }}"
+          port: 22
+          commands: "{{ SHOW_COMMAND }}"
+          formats: text
+          dest: "{{playbook_dir}}/{{ inventory_hostname }}.output.txt"
